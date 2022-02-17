@@ -11,6 +11,16 @@ public class MyStream {
     result.stream().forEach(x -> System.out.println(x));
   }
 
+  static void parallelStreamTest() {
+    List<Integer> numbers = new ArrayList<>();
+    for(int i=1; i<=30; i++) {
+      numbers.add(i);
+    }
+
+    numbers.stream().parallel().forEach(x -> System.out.println(Thread.currentThread().getName() + "\t" + x));
+    System.out.println();
+  }
+
   static void mapAndLoopFunctional() {
     List<Integer> numbers = Arrays.asList(1,2,3,4,5);
 
@@ -23,6 +33,6 @@ public class MyStream {
   }
 
   public static void main(String args[]) {
-    mapAndLoopFunctional();
+    parallelStreamTest();
   }
 }
