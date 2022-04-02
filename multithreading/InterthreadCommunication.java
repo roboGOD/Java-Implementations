@@ -44,11 +44,14 @@ public class InterthreadCommunication {
     Products products = new Products();
     String myProduct = "Gintama";
     Integer myStock = 12;
+    String myProduct2 = "Gura San";
+    Integer myStock2 = 10;
 
     Runnable t1 = () -> {
       while(products == null || !products.isAvailable(myProduct)) {
         System.out.println(Thread.currentThread().getName() + "\twaiting for product...");
         products.waitForProduct(myProduct);
+        System.out.println(Thread.currentThread().getName() + "\tGot notified!");
       }
 
       System.out.println(Thread.currentThread().getName() + "\tProduct found! " + myProduct + ": " + products.getCount(myProduct));
@@ -56,6 +59,9 @@ public class InterthreadCommunication {
 
     Runnable t2 = () -> {
       try {
+        TimeUnit.SECONDS.sleep(3);
+        System.out.println(Thread.currentThread().getName() + "\tUpdating stock " + myProduct2 + ": " + myStock2);
+        products.updateProduct(myProduct2, myStock2);
         TimeUnit.SECONDS.sleep(3);
         System.out.println(Thread.currentThread().getName() + "\tUpdating stock " + myProduct + ": " + myStock);
         products.updateProduct(myProduct, myStock);
